@@ -2,7 +2,6 @@ import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
 import reducers from './reducers';
 import createSagaMiddleware from 'redux-saga';
-import logger from 'redux-logger';
 import { rootSaga } from './reducers/sagas';
 import storage from 'redux-persist/es/storage';
 import {
@@ -33,9 +32,7 @@ const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    })
-      .concat(logger)
-      .concat(sagaMiddleware),
+    }).concat(sagaMiddleware),
   devTools: process.env.NODE_ENV !== 'production',
 });
 

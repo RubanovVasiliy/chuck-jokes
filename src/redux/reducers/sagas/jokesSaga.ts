@@ -7,9 +7,10 @@ import { JokesActionEnum } from '../jokes/types';
 
 interface ResponseGenerator {
   config?: AxiosRequestConfig;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data?: any;
   headers?: AxiosResponseHeaders;
-  request?: any;
+  request?: unknown;
   status?: number;
   statusText?: string;
 }

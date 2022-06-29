@@ -2,10 +2,11 @@ import { createMakeStyles } from 'tss-react';
 
 const theme = {
   jokesContainer: {
-    maxWidth: '1200px',
-    margin: '0 auto',
+    //maxWidth: '1200px',
+    //margin: '0 auto',
     display: 'flex',
-    flexDirection: 'column',
+    flexFlow: 'row wrap',
+    alignItems: 'flex-start',
   },
   jokeItem: {
     padding: '12px 16px',

@@ -1,9 +1,23 @@
 import { IJoke } from '../../../models/IJoke';
-import { GetJokeAction, JokesActionEnum } from './types';
+import {
+  FetchJokeFailureAction,
+  FetchJokeRequestAction,
+  FetchJokeSuccessAction,
+  JokesActionEnum,
+} from './types';
 
-export const PostsActionCreators = {
-  getJoke: (payload: IJoke): GetJokeAction => ({
-    type: JokesActionEnum.GET_JOKE,
+export const JokesActionCreators = {
+  fetchJokeRequest: (): FetchJokeRequestAction => ({
+    type: JokesActionEnum.FETCH_JOKE_REQUEST,
+  }),
+
+  fetchJokeSuccess: (payload: IJoke): FetchJokeSuccessAction => ({
+    type: JokesActionEnum.FETCH_JOKE_SUCCESS,
+    payload: payload,
+  }),
+
+  fetchJokeFailure: (payload: string): FetchJokeFailureAction => ({
+    type: JokesActionEnum.FETCH_JOKE_FAILURE,
     payload: payload,
   }),
 };

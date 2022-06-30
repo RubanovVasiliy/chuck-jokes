@@ -3,42 +3,28 @@ import { combineReducers } from 'redux';
 import reducers from './reducers';
 import createSagaMiddleware from 'redux-saga';
 import { rootSaga } from './reducers/sagas';
-import storage from 'redux-persist/es/storage';
-import {
-  persistReducer,
-  persistStore,
-  FLUSH,
-  REHYDRATE,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER,
-} from 'redux-persist';
 
 const rootReducer = combineReducers(reducers);
 const sagaMiddleware = createSagaMiddleware();
 
-const persistConfig = {
-  key: 'root',
-  storage,
-};
-
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+const persistedState = localStorage.getItem('persistState')
+  ? JSON.parse(localStorage.getItem('persistState') ?? '')
+  : {};
 
 const store = configureStore({
-  reducer: persistedReducer,
+  reducer: rootReducer,
+  preloadedState: persistedState,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
-    }).concat(sagaMiddleware),
+    getDefaultMiddleware().concat(sagaMiddleware),
   devTools: process.env.NODE_ENV !== 'production',
+});
+
+store.subscribe(() => {
+  localStorage.setItem('persistState', JSON.stringify(store.getState()));
 });
 
 sagaMiddleware.run(rootSaga);
 
-export const persister = persistStore(store);
 export default store;
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

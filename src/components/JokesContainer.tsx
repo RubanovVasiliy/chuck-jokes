@@ -24,7 +24,7 @@ const useStyles = makeStyles<unknown>({ name: { JokesContaine } })((theme) => ({
 }));
 
 export default function JokesContaine() {
-  const { jokes } = useTypedSelector((store) => store.jokes);
+  const { jokes, loading } = useTypedSelector((store) => store.jokes);
   const { fetchJokeRequest } = useActions();
 
   const { classes } = useStyles({});
@@ -39,6 +39,7 @@ export default function JokesContaine() {
           {joke.value}
         </TextItem>
       ))}
+      {loading && <TextItem className={classes.jokeItem}>Loading...</TextItem>}
     </div>
   );
 }
